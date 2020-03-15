@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--    <context:property-placeholder location="classpath:path.properties"/>-->
+
+    <bean id="appClientWriter" class="com.education.spring.controller.AppClientWriter">
+        <constructor-arg ref="appLogicsCare"/>
+    </bean>
+
+    <bean id="appLogicsCare" class="com.education.spring.service.AppLogicsCare">
+        <constructor-arg ref="appFileReader"/>
+        <constructor-arg ref="user"/>
+    </bean>
+
+    <bean id="appFileReader" class="com.education.spring.data.AppFileReader">
+        <property name="filePath" value="homework-list-questions/src/main/resources/resource.csv"/>
+    </bean>
+
+    <bean id="user" class="com.education.spring.data.User">
+    </bean>
+</beans>
