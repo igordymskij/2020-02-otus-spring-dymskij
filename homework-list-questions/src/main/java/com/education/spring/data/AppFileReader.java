@@ -9,15 +9,14 @@ import java.util.Scanner;
 public class AppFileReader {
 
     private String filePath;
-    private final List<String> lines = new ArrayList<>();
-    private final List<String> questions = new ArrayList<>();
-    private final List<String> answers = new ArrayList<>();
+    private final List<String> lines;
+    private final List<String> questions;
+    private final List<String> answers;
 
     public AppFileReader() {
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+        lines = new ArrayList<>();
+        questions = new ArrayList<>();
+        answers = new ArrayList<>();
     }
 
     public List<String> getQuestions() {
@@ -28,14 +27,15 @@ public class AppFileReader {
         return answers;
     }
 
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
     public void fileReader() {
-        //        Files.lines(Paths.get(filePath), StandardCharsets.UTF_8).forEach(System.out::println);
-//        try {
-//            lines = Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8);
-//            linesSeparator();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         File file = new File(filePath);
         try {
             Scanner scanner = new Scanner(file);

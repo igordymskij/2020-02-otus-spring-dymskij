@@ -15,8 +15,13 @@ public class AppClientWriter {
     }
 
     public void clientWriter() {
-        String answer = "";
         Scanner scan = new Scanner(System.in);
+        inputUserName(scan);
+        inputUserAnswer(scan);
+        outputTestResult();
+    }
+
+    private void inputUserName(Scanner scan) {
         System.out.println("Уважаемый, пользователь, введите своё имя и фамилию и нажмите 'Enter'");
         System.out.print("Имя: ");
         appLogicsCare.getUser().setClientName(scan.nextLine());
@@ -27,7 +32,10 @@ public class AppClientWriter {
                 + " , Вам предстоит пройти тест из "
                 + appLogicsCare.getAppFileReader().getQuestions().size()/5
                 + " вопросов. Выберите вариант ответа в диапазоне [1-4] и нажмите 'Enter'");
+    }
 
+    private void inputUserAnswer(Scanner scan) {
+        String answer;
         for (int i = 0; i < appLogicsCare.getAppFileReader().getQuestions().size(); i++) {
             System.out.println(appLogicsCare.getAppFileReader().getQuestions().get(i));
             if ((i+1)%5 == 0) {
@@ -38,9 +46,10 @@ public class AppClientWriter {
                 appLogicsCare.getUser().getClientAnswers().add(answer);
             }
         }
+    }
 
+    private void outputTestResult() {
         appLogicsCare.answerResolver();
-
         System.out.println(appLogicsCare.getUser().getClientName() + " "
                 + appLogicsCare.getUser().getClientLastName() + " , Ваш результат тестирования "
                 + appLogicsCare.getUser().getTestResult() + " из 5 правильных ответов!");
