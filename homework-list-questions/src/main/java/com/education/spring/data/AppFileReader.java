@@ -2,6 +2,10 @@ package com.education.spring.data;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,7 +13,7 @@ import java.util.Scanner;
 public class AppFileReader {
 
     private String filePath;
-    private final List<String> lines;
+    private List<String> lines;
     private final List<String> questions;
     private final List<String> answers;
 
@@ -38,13 +42,15 @@ public class AppFileReader {
     public void fileReader() {
         File file = new File(filePath);
         try {
-            Scanner scanner = new Scanner(file);
+            Scanner scanner = new Scanner(file, StandardCharsets.UTF_8);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 lines.add(line);
             }
             linesSeparator();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
