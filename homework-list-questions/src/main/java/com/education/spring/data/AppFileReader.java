@@ -1,16 +1,17 @@
 package com.education.spring.data;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import com.opencsv.CSVReader;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class AppFileReader {
 
     private String filePath;
-    private List<String> lines;
+    private final List<String[]> lines;
     private final List<String> questions;
     private final List<String> answers;
 
@@ -36,28 +37,30 @@ public class AppFileReader {
         return filePath;
     }
 
-    public void fileReader() {
-        File file = new File(filePath);
-        try {
-            Scanner scanner = new Scanner(file, StandardCharsets.UTF_8);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                lines.add(line);
-            }
-            linesSeparator();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void fileReader() throws Exception {
+        Reader reader = new BufferedReader(
+                new InputStreamReader(getClass().getResourceAsStream(filePath), "UTF-8"));
+        CSVReader csvReader = new CSVReader(reader);
+        String[] line;
+        while ((line = csvReader.readNext()) != null) {
+            lines.add(line);
         }
+        reader.close();
+        csvReader.close();
+        linesSeparator();
     }
 
     private void linesSeparator() {
         for (int i = 0; i < lines.size(); i++) {
-            if ((i+1)%6 == 0) {
-                answers.add(lines.get(i).substring(7, 8));
-                continue;
+            for (int j = 0; j < lines.get(i).length; j++) {
+                if ((j+1)%6 == 0) {
+                    answers.add(lines.get(i)[j].substring(7, 8));
+                    continue;
+                }
+                questions.add(lines.get(i)[j]);
             }
-            questions.add(lines.get(i));
         }
     }
+
 
 }

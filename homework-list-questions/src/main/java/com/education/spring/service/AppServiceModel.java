@@ -3,12 +3,12 @@ package com.education.spring.service;
 import com.education.spring.data.AppFileReader;
 import com.education.spring.data.User;
 
-public class AppLogicsCare {
+public class AppServiceModel {
 
     private final AppFileReader appFileReader;
     private final User user;
 
-    public AppLogicsCare(AppFileReader appFileReader, User user) {
+    public AppServiceModel(AppFileReader appFileReader, User user) {
         this.appFileReader = appFileReader;
         this.user = user;
     }
@@ -17,8 +17,12 @@ public class AppLogicsCare {
         return user;
     }
 
-    public AppFileReader getAppFileReader() {
-        return appFileReader;
+    public void setUserName(String name) {
+        user.setClientName(name);
+    }
+
+    public void setUserLastName(String lastName) {
+        user.setClientLastName(lastName);
     }
 
     public void answerResolver() {

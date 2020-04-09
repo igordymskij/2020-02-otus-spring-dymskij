@@ -34,8 +34,8 @@ public class User {
         return clientAnswers;
     }
 
-    public void setClientAnswers(List<String> clientAnswers) {
-        this.clientAnswers = clientAnswers;
+    public void addClientAnswers(List<String> clientAnswers) {
+        this.clientAnswers.addAll(clientAnswers);
     }
 
     public int getTestResult() {

@@ -7,13 +7,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
 
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws Exception {
         ClassPathXmlApplicationContext context =
                 new ClassPathXmlApplicationContext("/spring-context.xml");
         AppClientWriter appClientWriter = context.getBean(AppClientWriter.class);
-        AppFileReader appFileReader = context.getBean(AppFileReader.class);
-        appFileReader.fileReader();
-        appClientWriter.clientWriter();
+        appClientWriter.runTest();
     }
 
 }
