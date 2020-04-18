@@ -47,8 +47,7 @@ public class AppClientWriter {
         System.out.println (getLocalMessage("app.role",
             new String[]{
                 serviceModel.getUser().getClientName(),
-                serviceModel.getUser().getClientLastName(),
-                String.valueOf(fileReader.getQuestions().size()/5)}
+                serviceModel.getUser().getClientLastName()}
         ));
     }
 
