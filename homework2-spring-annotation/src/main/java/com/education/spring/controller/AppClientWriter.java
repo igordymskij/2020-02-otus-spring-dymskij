@@ -19,6 +19,7 @@ public class AppClientWriter {
     private final MessageSource messageSource;
 
     private Locale locale;
+    private Scanner scan;
 
     @Autowired
     public AppClientWriter(AppServiceModel serviceModel, AppFileReader fileReader, MessageSource messageSource) {
@@ -28,7 +29,7 @@ public class AppClientWriter {
     }
 
     public void runTest () throws Exception {
-        Scanner scan = new Scanner(System.in);
+        scan = new Scanner(System.in);
         inputUserLanguage(scan);
         inputUserName(scan);
         inputUserAnswer(scan);
@@ -40,9 +41,9 @@ public class AppClientWriter {
     private void inputUserName(Scanner scan) {
         System.out.println(getLocalMessage("user.hello", null));
         System.out.print(getLocalMessage("user.name", null));
-        serviceModel.setUserName(scan.nextLine());
+        serviceModel.getUser().setClientName(scan.nextLine());
         System.out.print(getLocalMessage("user.lastname", null));
-        serviceModel.setUserLastName(scan.nextLine());
+        serviceModel.getUser().setClientLastName(scan.nextLine());
         System.out.println (getLocalMessage("app.role",
             new String[]{
                 serviceModel.getUser().getClientName(),

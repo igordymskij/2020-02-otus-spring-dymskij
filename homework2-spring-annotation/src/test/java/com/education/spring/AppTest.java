@@ -1,8 +1,9 @@
 package com.education.spring;
 
-import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import com.education.spring.controller.AppClientWriter;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 /**
  * Unit test for simple App.
@@ -10,8 +11,11 @@ import org.junit.Test;
 public class AppTest 
 {
 
+    @Mock
+    AppClientWriter appClientWriter;
+
     @Test
-    public void shouldAnswerWithTrue() {
-        //TODO добавить Unit тесты
+    public void shouldHaveCorrectStartApp() throws Exception {
+        //TODO тут тоже не знаю как протестировать runTest()
     }
 }

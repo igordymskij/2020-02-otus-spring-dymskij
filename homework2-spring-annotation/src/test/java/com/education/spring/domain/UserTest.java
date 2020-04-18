@@ -1,27 +1,26 @@
 package com.education.spring.domain;
 
-import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-@DisplayName("Класс User")
+@ExtendWith(MockitoExtension.class)
 public class UserTest {
 
-    @DisplayName("корректо создаётся конструктором")
     @Test
     public void shouldHaveCorrectConstructor() {
         User user = new User();
 
-        assertEquals(new ArrayList<>().size(), user.getClientAnswers().size());
+        assertEquals(new ArrayList<>(), user.getClientAnswers());
     }
 
-    @DisplayName("корректо изменяет свои поля")
     @Test
     public void shouldHaveCorrectSetter() {
         User user = new User();
@@ -34,7 +33,6 @@ public class UserTest {
         assertEquals(5, user.getTestResult());
     }
 
-    @DisplayName("корректо добавляет ответы пользователя")
     @Test
     public void shouldHaveCorrectaddAnswerUser() {
         User user = new User();

@@ -19,18 +19,6 @@ public class AppServiceModel {
         return user;
     }
 
-    public AppFileReader getAppFileReader() {
-        return appFileReader;
-    }
-
-    public void setUserName(String name) {
-        user.setClientName(name);
-    }
-
-    public void setUserLastName(String lastName) {
-        user.setClientLastName(lastName);
-    }
-
     public void addUserAnswer(String answer) {
         user.getClientAnswers().add(answer);
     }
