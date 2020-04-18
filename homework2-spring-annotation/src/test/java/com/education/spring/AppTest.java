@@ -3,11 +3,12 @@ package com.education.spring;
 
 import com.education.spring.controller.AppClientWriter;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-/**
- * Unit test for simple App.
- */
+
+@ExtendWith(MockitoExtension.class)
 public class AppTest 
 {
 
