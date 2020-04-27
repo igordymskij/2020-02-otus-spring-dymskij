@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 public class App {
 
-    public static void main( String[] args ) throws Exception {
+    public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(App.class);
         AppClientWriter appClientWriter = context.getBean(AppClientWriter.class);
         appClientWriter.runTest();

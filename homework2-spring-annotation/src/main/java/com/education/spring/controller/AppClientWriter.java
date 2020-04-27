@@ -2,7 +2,6 @@ package com.education.spring.controller;
 
 import com.education.spring.data.AppFileReader;
 import com.education.spring.service.AppServiceModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 
@@ -21,7 +20,6 @@ public class AppClientWriter {
     private Locale locale;
     private Scanner scan;
 
-    @Autowired
     public AppClientWriter(AppServiceModel serviceModel, AppFileReader fileReader, MessageSource messageSource) {
         this.serviceModel = serviceModel;
         this.fileReader = fileReader;

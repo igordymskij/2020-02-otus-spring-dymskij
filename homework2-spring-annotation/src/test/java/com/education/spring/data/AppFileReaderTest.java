@@ -1,6 +1,6 @@
 package com.education.spring.data;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -22,7 +22,7 @@ public class AppFileReaderTest {
     private AppFileReader reader;
     Locale locale;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         locale = new Locale("test", "Test");
     }
