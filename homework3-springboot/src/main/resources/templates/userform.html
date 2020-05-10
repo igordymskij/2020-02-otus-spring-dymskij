@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Фрма приветсвия</title>
+	</head>
+
+	<body>
+		<h1>Уважаемый пользователь заполните форм и нажмите кнопку отправить</h1>	
+
+		<main>
+			<form action="http://localhost:8080/form" method="post" enctype="multipart/form-data">
+				<fieldset>
+					<legend>Основные данные</legend>
+					<p>
+						<label>Имя
+							<input type="text" name="personName" size="50">
+						</label>	
+					</p>
+
+					<p>
+						<label>Фамилия
+							<input type="text" name="personLastName" size="50">
+						</label>
+					</p>
+
+					<fieldset>
+						<legend>Язык:</legend>
+	
+						<p>
+							<label>&nbsp;русский
+								<input type="radio" value="ru" name="choiceLanguage">
+							</label>&nbsp;&nbsp;
+
+							<label>&nbsp;english
+								<input type="radio" value="en" name="choiceLanguage">	
+							</label>
+						</p>
+					</fieldset>		
+				</fieldset>
+
+				<input type="submit" value="Отправить">	
+
+				<p>
+					<small>* Поля, отмеченные звёздочкой, являются обязательными для заполнения</small>
+				</p>
+			</form>	
+		</main>
+	</body>
+</html>
