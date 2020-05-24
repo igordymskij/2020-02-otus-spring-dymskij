@@ -83,7 +83,6 @@ public class TestAppControllerTest {
 
         assertEquals(HttpStatus.OK, entity.getStatusCode());
         assertNotNull(entity.getBody(), "body not null");
-        System.out.println(entity.getBody());
         assertTrue(entity.getBody().contains("Elon Musk, you have to pass a test of 5 questions. Select an answer option in the range [1-4] and press button Send!"));
         assertTrue(entity.getBody().contains("Question №1 Which of these items is the instrument of the symphony orchestra?"));
         assertTrue(entity.getBody().contains("1. Knives"));
