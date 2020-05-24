@@ -3,42 +3,79 @@ package com.education.spring.service;
 import com.education.spring.data.AppFileReader;
 import com.education.spring.domain.User;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class AppServiceModelTest {
 
     @Mock
     private AppFileReader reader;
 
-    private AppServiceModel model;
+    @Mock
+    private MessageSource messageSource;
 
+    private AppServiceModel model;
+    private User user;
 
     @Test
-    public void shouldHaveCorrectAnswerResoler() {
+    public void shouldHaveCorrectAnswerResolver() {
         when(reader.getAnswers()).thenReturn(Arrays.asList("3","3","4","2","1"));
-        User user = new User();
-        user.addClientAnswers(Arrays.asList("3","3","4","2","4"));
-        model = new AppServiceModel(reader, user);
-        model.answerResolver();
+        when(messageSource.getMessage(any(), any(), any()))
+                .thenReturn("Bellatrix Lestrange, Your test result 4 of 5 correct answers!");
+        user = new User();
+        model = new AppServiceModel(reader, user, messageSource);
+        Map<String, String> mapUserAnswers = Map.of("0", "3", "1", "3", "2", "4", "3","2", "4", "4");
 
-        assertEquals(4, model.getUser().getTestResult());
+        assertEquals("Bellatrix Lestrange, Your test result 4 of 5 correct answers!",
+                model.getUserTestResult(mapUserAnswers));
+        assertEquals(4, user.getTestResult());
     }
 
     @Test
-    public void shouldHaveCorrectAddUserAnswer() {
-        User user = new User();
-        model = new AppServiceModel(reader, user);
-        model.addUserAnswer("4");
+    public void shouldHaveCorrectGetAppRoleOnRu() {
+        when(reader.getQuestionsCount()).thenReturn(1);
+        ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
+        ms.setBasename("classpath:messages/bundle");
+        ms.setDefaultEncoding("UTF-8");
+        user = new User();
+        user.setClientName("Родион");
+        user.setClientLastName("Роскольников");
+        model = new AppServiceModel(reader, user, ms);
+        model.fileReader("ru");
+        Map<String, String> map = Map.of("appRole", "Родион Роскольников, Вам предстоит пройти тест из 1 вопросов. Выберите вариант ответа в диапазоне [1-4] и нажмите кнопку Отправить!",
+                "userAnswer", "Ваш ответ: ",
+                "sendButton", "Отправить",
+                "appFieldWarning", "Поля, отмеченные звёздочкой, являются обязательными для заполнения");
 
-        assertEquals(Arrays.asList("4"), user.getClientAnswers());
+        assertEquals(map, model.getAppRole());
+    }
 
+    @Test
+    public void shouldHaveCorrectGetAppRoleOnEn() {
+        when(reader.getQuestionsCount()).thenReturn(1);
+        ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
+        ms.setBasename("classpath:messages/bundle");
+        ms.setDefaultEncoding("UTF-8");
+        user = new User();
+        user.setClientName("Harry");
+        user.setClientLastName("Potter");
+        model = new AppServiceModel(reader, user, ms);
+        model.fileReader("eng");
+        Map<String, String> map = Map.of("appRole", "Harry Potter, you have to pass a test of 1 questions. Select an answer option in the range [1-4] and press button Send!",
+                "userAnswer", "Your answer: ",
+                "sendButton", "Send",
+                "appFieldWarning", "Fields marked with an asterisk are required");
+
+        assertEquals(map, model.getAppRole());
     }
 }

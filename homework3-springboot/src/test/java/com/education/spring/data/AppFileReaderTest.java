@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class AppFileReaderTest {
 
     @Mock
@@ -33,11 +34,11 @@ public class AppFileReaderTest {
         reader = new AppFileReader(messageSource);
         reader.fileReader(locale);
 
-        assertEquals(Arrays.asList("TestQuestion_RU",
+        assertEquals(Arrays.asList(Arrays.asList("TestQuestion_RU",
                                     "TestVarible_1_RU",
                                     "TestVarible_2_RU",
                                     "TestVarible_3_RU",
-                                    "TestVarible_4_RU"), reader.getQuestions());
+                                    "TestVarible_4_RU")), reader.getQuestions());
         assertEquals(Arrays.asList("1"), reader.getAnswers());
     }
 
@@ -47,11 +48,11 @@ public class AppFileReaderTest {
         reader = new AppFileReader(messageSource);
         reader.fileReader(locale);
 
-        assertEquals(Arrays.asList("TestQuestion_ENG",
+        assertEquals(Arrays.asList(Arrays.asList("TestQuestion_ENG",
                                     "TestVarible_1_ENG",
                                     "TestVarible_2_ENG",
                                     "TestVarible_3_ENG",
-                                    "TestVarible_4_ENG"), reader.getQuestions());
+                                    "TestVarible_4_ENG")), reader.getQuestions());
         assertEquals(Arrays.asList("1"), reader.getAnswers());
     }
 }

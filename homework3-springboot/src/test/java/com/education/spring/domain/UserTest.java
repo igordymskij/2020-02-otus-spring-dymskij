@@ -3,6 +3,7 @@ package com.education.spring.domain;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,14 +12,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class UserTest {
 
     @Test
     public void shouldHaveCorrectConstructor() {
         User user = new User();
 
-        assertEquals(new ArrayList<>(), user.getClientAnswers());
+        assertEquals(new ArrayList<>(), user.getUserAnswers());
     }
 
     @Test
@@ -39,7 +40,7 @@ public class UserTest {
         List<String> listAnswers = Arrays.asList("1","2","3","4","1");
         user.addClientAnswers(listAnswers);
 
-        assertEquals(listAnswers, user.getClientAnswers());
+        assertEquals(listAnswers, user.getUserAnswers());
     }
 
 }

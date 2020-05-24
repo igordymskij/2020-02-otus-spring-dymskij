@@ -33,11 +33,12 @@ public class User {
         this.clientLastName = clientLastName;
     }
 
-    public List<String> getClientAnswers() {
+    public List<String> getUserAnswers() {
         return clientAnswers;
     }
 
     public void addClientAnswers(List<String> clientAnswers) {
+        this.clientAnswers.clear();
         this.clientAnswers.addAll(clientAnswers);
     }
 
