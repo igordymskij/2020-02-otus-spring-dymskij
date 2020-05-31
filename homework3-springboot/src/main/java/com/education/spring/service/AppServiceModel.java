@@ -18,9 +18,9 @@ public class AppServiceModel {
     private Locale locale;
 
     @Autowired
-    public AppServiceModel(AppFileReader appFileReader, User user, MessageSource messageSource) {
+    public AppServiceModel(AppFileReader appFileReader, MessageSource messageSource) {
         this.appFileReader = appFileReader;
-        this.user = user;
+        this.user = new User();
         this.messageSource = messageSource;
     }
 
@@ -68,6 +68,7 @@ public class AppServiceModel {
 
     public Map<String, String> getAppRole() {
         Map<String, String> map = new HashMap<>();
+        map.put("appHeader", getLocalMessage("app.header", null));
         map.put("appRole", getLocalMessage("app.role",
             new String[]{
                 user.getClientName(),

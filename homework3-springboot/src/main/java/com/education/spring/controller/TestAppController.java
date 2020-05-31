@@ -13,7 +13,7 @@ import java.util.Map;
 @Controller
 public class TestAppController {
 
-    private AppServiceModel appServiceModel;
+    private final AppServiceModel appServiceModel;
 
     @Autowired
     public TestAppController(AppServiceModel appServiceModel) {
@@ -36,6 +36,7 @@ public class TestAppController {
     public String postAnswers(@RequestParam Map<String, String> map,
                            Map<String, Object> model) {
         model.put("userResult", appServiceModel.getUserTestResult(map));
+        model.putAll(appServiceModel.getAppRole());
         return "results";
     }
 

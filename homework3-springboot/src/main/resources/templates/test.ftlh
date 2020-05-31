@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Тест</title>
+        <title>${appHeader}</title>
     </head>
     <body>
         <main>
