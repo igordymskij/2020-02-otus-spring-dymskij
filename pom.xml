@@ -18,6 +18,7 @@
 
   <modules>
     <module>homework-list-questions</module>
+    <module>homework5-spring-jdbc</module>
   </modules>
 
 </project>
