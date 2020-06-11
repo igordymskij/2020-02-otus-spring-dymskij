@@ -25,21 +25,29 @@ public class AppClientWriter {
     private Locale locale;
     private Scanner scan;
 
+    public AppServiceModel getServiceModel() {
+        return serviceModel;
+    }
+
+    public void setScan(Scanner scan) {
+        this.scan = scan;
+    }
+
     @Autowired
-    public AppClientWriter(AppServiceModel serviceModel, AppFileReader fileReader, MessageSource messageSource) {
+    public AppClientWriter(AppServiceModel serviceModel, AppFileReader fileReader, MessageSource messageSource, Scanner scan) {
         this.serviceModel = serviceModel;
         this.fileReader = fileReader;
         this.messageSource = messageSource;
-        this.scan = new Scanner(System.in);
+        this.scan = scan;
     }
 
     @ShellMethod(value = "Write login user command", key = {"l", "log", "login"})
     @ShellMethodAvailability(value = "isLanguageCommandAvailable")
-    public void inputUserName(@ShellOption(defaultValue = "Best") String name,
+    public String inputUserName(@ShellOption(defaultValue = "Best") String name,
                               @ShellOption(defaultValue = "User") String lastName) {
         serviceModel.getUser().setClientName(name);
         serviceModel.getUser().setClientLastName(lastName);
-        System.out.println(getLocalMessage("user.hello", new String[]{name, lastName}));
+        return getLocalMessage("user.hello", new String[]{name, lastName});
     }
 
     @ShellMethod(value = "Print test command", key = {"t", "test"})
@@ -66,11 +74,9 @@ public class AppClientWriter {
     }
 
     @ShellMethod(value = "Choice language command", key = {"lg", "lang", "language"})
-    public void inputUserLanguage(@ShellOption(defaultValue = "RU") String language) {
-        System.out.println("Ваш выбор: " + language);
+    public String inputUserLanguage(@ShellOption(defaultValue = "RU") String language) {
         if (!checkClientLanguage(language)) {
-            System.out.println("Допусимы только варианты 'RU' и 'ENG'");
-            return;
+            return "Допусимы только варианты 'RU' и 'ENG'";
         }
         switch (language) {
             case "RU": {
@@ -82,19 +88,20 @@ public class AppClientWriter {
                 break;
             }
         }
+        return "Ваш выбор: " + language;
     }
 
     @ShellMethod(value = "Print result command", key = {"r", "res", "result"})
     @ShellMethodAvailability(value = "isTestResultCommandAvailable")
-    public void outputTestResult() {
+    public String outputTestResult() {
         serviceModel.answerResolver();
-        System.out.println(getLocalMessage("user.result",
+        return getLocalMessage("user.result",
             new String[]{
                 serviceModel.getUser().getClientName(),
                 serviceModel.getUser().getClientLastName(),
                 String.valueOf(serviceModel.getUser().getTestResult())
             }
-        ));
+        );
     }
 
     private boolean checkClientAnswer(String answer) {
