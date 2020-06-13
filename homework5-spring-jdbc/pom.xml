@@ -101,7 +101,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.education.spring.App</mainClass>
+                                    <mainClass>com.education.spring.AppJdbc</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
