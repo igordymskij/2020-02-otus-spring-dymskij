@@ -2,13 +2,13 @@ package com.education.spring.domain;
 
 public class Book {
 
-    private int id;
+    private String id;
     private String name;
     private Author author;
     private Jenre jenre;
     private String year;
 
-    public Book(int id, String name, Author author, Jenre jenre, String year) {
+    public Book(String id, String name, Author author, Jenre jenre, String year) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -16,7 +16,7 @@ public class Book {
         this.year = year;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

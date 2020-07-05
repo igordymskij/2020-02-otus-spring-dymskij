@@ -36,9 +36,9 @@ public class BooksDaoJdbc implements BooksDao {
     @Override
     public Book getByName(String name) {
         Map<String, Object> params = Collections.singletonMap("name", name);
-        return namedParameterJdbcOperations.queryForObject(
-                "select * from books, authors, jenres where books.authorId=authors.authorId and books.jenreId=jenres.jenreId and books.name = :name", params, new BookMapper()
-        );
+            return namedParameterJdbcOperations.queryForObject(
+                    "select * from books, authors, jenres where books.authorId=authors.authorId and books.jenreId=jenres.jenreId and books.name = :name", params, new BookMapper()
+            );
     }
 
     @Override
@@ -50,8 +50,46 @@ public class BooksDaoJdbc implements BooksDao {
 
     public int insert(Book book) {
         return jdbc.update(
-                "insert into books(id, name, authorId, jenreId, years) values(?, ?, ?, ?, ?)",
+                "insert into books (id, name, authorId, jenreId, year) values(?, ?, ?, ?, ?)",
                     book.getId(), book.getName(), book.getAuthor().getId(), book.getJenre().getId(), book.getYear()
+        );
+    }
+
+    @Override
+    public int nameUpdate(String name, String newName) {
+        Map<String, Object> params = Map.of("newName", newName,
+                                            "name", name);
+        return namedParameterJdbcOperations.update(
+                "update books set name = :newName where name = :name", params
+        );
+    }
+
+    @Override
+    public int authorUpdate(String name, String newAuthorId) {
+        Map<String, Object> params = Map.of("newAuthorId", newAuthorId,
+                                            "name", name);
+
+        return namedParameterJdbcOperations.update(
+                "update books set authorId = :newAuthorId where name = :name", params
+        );
+    }
+
+    @Override
+    public int jenreUpdate(String name, String newJenreId) {
+        Map<String, Object> params = Map.of("newJenreId", newJenreId,
+                                            "name", name);
+
+        return namedParameterJdbcOperations.update(
+                "update books set jenreId = :newJenreId where name = :name", params
+        );
+    }
+
+    @Override
+    public int yearUpdate(String name, String newYear) {
+        Map<String, Object> params = Map.of("newYear", newYear,
+                                            "name", name);
+        return namedParameterJdbcOperations.update(
+                "update books set year = :newYear where name = :name", params
         );
     }
 
@@ -69,13 +107,13 @@ public class BooksDaoJdbc implements BooksDao {
 
         @Override
         public Book mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Book(resultSet.getInt("id"),
+            return new Book(resultSet.getString("id"),
                             resultSet.getString("name"),
-                            new Author(resultSet.getInt("authorId"),
+                            new Author(resultSet.getString("authorId"),
                                        resultSet.getString("authorName"),
                                        resultSet.getString("lastname"),
                                        resultSet.getString("surname")),
-                            new Jenre(resultSet.getInt("jenreId"),
+                            new Jenre(resultSet.getString("jenreId"),
                                       resultSet.getString("jenre")),
                             resultSet.getString("year")
             );

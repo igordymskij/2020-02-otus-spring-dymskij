@@ -1,0 +1,4 @@
+#по умолчанию стоит embaded -встроенная, выбирая always мы показываем, что используем базу, кот хотим
+spring:
+  datasourse:
+    initialization-mode: always

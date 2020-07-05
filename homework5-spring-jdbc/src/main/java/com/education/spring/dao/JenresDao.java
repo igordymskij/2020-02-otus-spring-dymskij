@@ -10,6 +10,7 @@ public interface JenresDao {
     Jenre getByName(String jenre);
     List<Jenre> getAll();
     int insert(Jenre jenre);
+    int jenreUpdate(String jenre, String newJenre);
     int deleteById(int jenreId);
     int deleteByName(String jenre);
 }

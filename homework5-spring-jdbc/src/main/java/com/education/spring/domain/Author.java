@@ -2,19 +2,19 @@ package com.education.spring.domain;
 
 public class Author {
 
-    private int id;
+    private String id;
     private String name;
     private String lastName;
     private String surname;
 
-    public Author(int id, String name, String lastName, String surname) {
+    public Author(String id, String name, String lastName, String surname) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.surname = surname;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -28,6 +28,10 @@ public class Author {
 
     public String getSurname() {
         return surname;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
