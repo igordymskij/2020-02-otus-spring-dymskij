@@ -1,7 +1,7 @@
 package com.education.spring.service;
 
-import com.education.spring.data.AppFileReader;
-import com.education.spring.data.User;
+import com.education.spring.dao.AppFileReader;
+import com.education.spring.dao.User;
 
 public class AppServiceModel {
 

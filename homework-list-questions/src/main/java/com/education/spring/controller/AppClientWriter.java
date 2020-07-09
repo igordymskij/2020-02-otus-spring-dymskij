@@ -1,6 +1,6 @@
 package com.education.spring.controller;
 
-import com.education.spring.data.AppFileReader;
+import com.education.spring.dao.AppFileReader;
 import com.education.spring.service.AppServiceModel;
 
 import java.util.Scanner;
