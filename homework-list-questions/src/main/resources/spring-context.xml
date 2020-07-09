@@ -23,10 +23,10 @@
         <constructor-arg ref="user"/>
     </bean>
 
-    <bean id="appFileReader" class="com.education.spring.data.AppFileReader">
+    <bean id="appFileReader" class="com.education.spring.dao.AppFileReader">
         <property name="filePath" value="/resource.csv"/>
     </bean>
 
-    <bean id="user" class="com.education.spring.data.User">
+    <bean id="user" class="com.education.spring.dao.User">
     </bean>
 </beans>

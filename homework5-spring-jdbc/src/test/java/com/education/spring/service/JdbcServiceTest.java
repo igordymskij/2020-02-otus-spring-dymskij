@@ -76,8 +76,8 @@ class JdbcServiceTest {
                 new Author("2", "Льюис", "Керролл", "null"),
                 new Jenre("1", "Приключения"),
                 "1865");
-        Book actualbBook = jdbcService.getBookByName("Приключения Алисы в Стране чудес");
-        assertThat(actualbBook.toString()).isEqualTo(expectedBook.toString());
+        Book actualBook = jdbcService.getBookByName("Приключения Алисы в Стране чудес");
+        assertThat(actualBook.toString()).isEqualTo(expectedBook.toString());
     }
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
@@ -121,6 +121,7 @@ class JdbcServiceTest {
         assertThat(actualAuthor).isEqualToComparingFieldByField(expectedAuthor);
     }
 
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
     void getAuthorByName() {
         Author expectedAuthor = new Author("1", "Антуан", "Сент-Экзюпери", null);

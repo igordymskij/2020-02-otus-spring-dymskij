@@ -1,7 +1,6 @@
 package com.education.spring;
 
 import com.education.spring.controller.AppClientWriter;
-import com.education.spring.data.AppFileReader;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 

@@ -26,7 +26,8 @@ public class AuthorsDaoJdbc implements AuthorsDao {
     public Author getById(long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
         return namedParameterJdbcOperations.queryForObject(
-                "select * from authors where authors.authorId = :id", params, new AuthorMapper()
+                "select authorid, authorname, lastname, surname from authors where authors.authorId = :id",
+                params, new AuthorMapper()
         );
     }
 
@@ -34,7 +35,7 @@ public class AuthorsDaoJdbc implements AuthorsDao {
     public Author getByName(String lastName) {
         Map<String, Object> params = Collections.singletonMap("lastName", lastName);
         return namedParameterJdbcOperations.queryForObject(
-                "select * from authors where lastname = :lastName", params, new AuthorMapper()
+                "select authorid, authorname, lastname, surname from authors where lastname = :lastName", params, new AuthorMapper()
         );
     }
 

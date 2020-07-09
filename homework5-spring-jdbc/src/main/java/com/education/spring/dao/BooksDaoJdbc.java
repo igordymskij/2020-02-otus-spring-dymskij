@@ -29,7 +29,8 @@ public class BooksDaoJdbc implements BooksDao {
     public Book getById(long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
         return namedParameterJdbcOperations.queryForObject(
-                "select * from books, authors, jenres where books.authorId=authors.authorId and books.jenreId=jenres.jenreId and books.id = :id", params, new BookMapper()
+                "select b.id, b.name, a.authorid, a.authorname, a.lastname, a.surname, j.jenreid, j.jenre, b.year from books, authors, jenres where b.authorId=a.authorId and b.jenreId=j.jenreId and b.id = :id",
+                params, new BookMapper()
         );
     }
 
@@ -37,14 +38,16 @@ public class BooksDaoJdbc implements BooksDao {
     public Book getByName(String name) {
         Map<String, Object> params = Collections.singletonMap("name", name);
             return namedParameterJdbcOperations.queryForObject(
-                    "select * from books, authors, jenres where books.authorId=authors.authorId and books.jenreId=jenres.jenreId and books.name = :name", params, new BookMapper()
+                    "select b.id, b.name, a.authorid, a.authorname, a.lastname, a.surname, j.jenreid, j.jenre, b.year from books b, authors a, jenres j where b.authorId=a.authorId and b.jenreId=j.jenreId and b.name = :name",
+                    params, new BookMapper()
             );
     }
 
     @Override
     public List<Book> getAll() {
         return jdbc.query(
-                "select * from books, authors, jenres where books.authorId=authors.authorId and books.jenreId=jenres.jenreId", new BookMapper()
+                "select b.id, b.name, a.authorid, a.authorname, a.lastname, a.surname, j.jenreid, j.jenre, b.year from books b, authors a, jenres j where b.authorId=a.authorId and b.jenreId=j.jenreId",
+                new BookMapper()
         );
     }
 

@@ -27,7 +27,7 @@ public class JenresDaoJdbc implements JenresDao{
     public Jenre getById(int jenreId) {
         Map<String, Object> params = Collections.singletonMap("jenreId", jenreId);
         return namedParameterJdbcOperations.queryForObject(
-                "select * from jenres where jenreId = :jenreId", params, new JenreMapper()
+                "select jenreid, jenre from jenres where jenreId = :jenreId", params, new JenreMapper()
         );
     }
 
@@ -35,7 +35,7 @@ public class JenresDaoJdbc implements JenresDao{
     public Jenre getByName(String jenre) {
         Map<String, Object> params = Collections.singletonMap("jenre", jenre);
         return namedParameterJdbcOperations.queryForObject(
-                "select * from jenres where jenre = :jenre", params, new JenreMapper()
+                "select jenreid, jenre from jenres where jenre = :jenre", params, new JenreMapper()
         );
     }
 

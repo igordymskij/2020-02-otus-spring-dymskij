@@ -1,4 +1,4 @@
-package com.education.spring.data;
+package com.education.spring.dao;
 
 import java.util.ArrayList;
 import java.util.List;
