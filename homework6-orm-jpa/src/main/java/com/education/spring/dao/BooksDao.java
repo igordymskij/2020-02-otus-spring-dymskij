@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface BooksDao {
 
-    Optional<Book> findById(long id);
+    Optional<Book> findById(int id);
     List<Book> findByName(String name);
     List<Book> findAll();
     Book save(Book book);

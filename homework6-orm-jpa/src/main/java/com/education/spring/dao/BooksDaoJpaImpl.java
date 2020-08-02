@@ -35,7 +35,7 @@ public class BooksDaoJpaImpl implements BooksDao {
     }
 
     @Override
-    public Optional<Book> findById(long id) {
+    public Optional<Book> findById(int id) {
         return Optional.ofNullable(em.find(Book.class, id));
     }
 
@@ -67,8 +67,6 @@ public class BooksDaoJpaImpl implements BooksDao {
     public int deleteById(int id) {
         Query query = em.createQuery("delete from Book b where b.id = :id");
         query.setParameter("id", id);
-        int i = query.executeUpdate();
-        em.clear();
-        return i;
+        return query.executeUpdate();
     }
 }
