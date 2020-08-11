@@ -43,21 +43,6 @@ class CommentsDaoJpaTest {
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
-    void findBBookTest() {
-        Book book = new Book(0, "Маленький принц",
-                new Author(0, "Антуан", "Сент-Экзюпери", null),
-                new Jenre(0, "Приключения"),
-                "1942");
-        em.persist(book);
-        Comment actualComment = new Comment(0, book, "Великая книга");
-        List<Comment> actualCommentList = Arrays.asList(actualComment);
-        em.persist(actualComment);
-        List<Comment> expectedCommentList = commentsDaoJpa.findByBook(book);
-        assertThat(actualCommentList).isEqualTo(expectedCommentList);
-    }
-
-    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
-    @Test
     void findAllTest() {
         Book book = new Book(0, "Маленький принц",
                 new Author(0, "Антуан", "Сент-Экзюпери", null),
