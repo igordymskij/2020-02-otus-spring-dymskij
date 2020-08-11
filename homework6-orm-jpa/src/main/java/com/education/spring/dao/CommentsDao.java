@@ -10,12 +10,9 @@ import java.util.Optional;
 public interface CommentsDao {
 
     Optional<Comment> findById(int id);
-    List<Comment> findByBookId(int bookId);
     List<Comment> findAll();
     Comment save(Comment comment);
-    int updateById(int id, Comment comment);
-    int deleteById(int id);
-    int deleteByBookId(int id);
-
+    Comment update(Comment comment);
+    void deleteById(int id);
 }
 

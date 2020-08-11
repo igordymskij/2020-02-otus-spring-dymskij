@@ -8,7 +8,6 @@ public class AppJpa {
 
     public static void main(String[] args) {
             SpringApplication.run(AppJpa.class, args);
-
     }
 
 }

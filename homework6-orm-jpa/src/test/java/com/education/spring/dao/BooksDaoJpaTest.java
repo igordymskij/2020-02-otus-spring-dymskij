@@ -73,17 +73,14 @@ public class BooksDaoJpaTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
     public void updateByIdTest() {
-        Book mistackesBook = new Book(0, "Принц",
+        Book actualBook = new Book(0, "Маленький принц",
                 new Author(0, "Рене", "Сент-Экзюпери", ""),
                 new Jenre(0, "Фантастика"),
                 "1942");
-        Book actualBook = new Book(1, "Маленький принц",
-                new Author(1, "Рене", "Сент-Экзюпери", ""),
-                new Jenre(1, "Фантастика"),
-                "1942");
-        em.persist(mistackesBook);
-        booksDaoJpa.updateById(1, actualBook);
-        em.clear();
+        em.persist(actualBook);
+        actualBook.getAuthor().setName("Керролл");
+        booksDaoJpa.update(actualBook);
+        em.refresh(actualBook);
         Optional<Book> optionalBook = booksDaoJpa.findById(1);
         Book expectedBook = optionalBook.get();
         assertThat(actualBook).isEqualTo(expectedBook);
@@ -91,7 +88,7 @@ public class BooksDaoJpaTest {
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
-    public void shoudReturnExpectedDeleteBookById() {
+    public void deleteByIdTest() {
         Book book1 = new Book(0, "Приключения Алисы в Стране чудес",
                 new Author(0, "Льюис", "Керролл", ""),
                 new Jenre(0, "Приключения"),

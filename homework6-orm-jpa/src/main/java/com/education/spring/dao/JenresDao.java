@@ -12,7 +12,7 @@ public interface JenresDao {
     Jenre findByName(String name);
     List<Jenre> findAll();
     Jenre save(Jenre jenre);
-    int updateById(int jenre, Jenre newJenre);
-    int deleteById(int jenreId);
+    Jenre update(Jenre newJenre);
+    void deleteById(int jenreId);
 
 }

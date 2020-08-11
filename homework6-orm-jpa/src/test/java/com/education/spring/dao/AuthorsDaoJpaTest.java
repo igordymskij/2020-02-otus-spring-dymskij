@@ -62,11 +62,11 @@ class AuthorsDaoJpaTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
     void nameUpdateTest() {
-        Author mistackesAuthor = new Author(0, "Рене", "Керролл", "");
-        Author actualAuthor = new Author(1, "Льюис", "Керролл", "");
-        em.persist(mistackesAuthor);
-        authorsDaoJpa.updateById(1, actualAuthor);
-        em.clear();
+        Author actualAuthor = new Author(0, "Рене", "Керролл", "");
+        em.persist(actualAuthor);
+        actualAuthor.setName("Льюис");
+        authorsDaoJpa.update(actualAuthor);
+        em.refresh(actualAuthor);
         Optional<Author> optionalAuthor = authorsDaoJpa.findById(1);
         Author expectedAuthor = optionalAuthor.get();
         assertThat(actualAuthor).isEqualTo(expectedAuthor);

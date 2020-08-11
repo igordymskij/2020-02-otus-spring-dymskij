@@ -1,31 +1,22 @@
 package com.education.spring.dao;
 
-import com.education.spring.domain.Book;
 import com.education.spring.domain.Jenre;
-import org.springframework.jdbc.core.JdbcOperations;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-@Transactional
 @Repository
 public class JenresDaoJpaImpl implements JenresDao{
 
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     @Override
     public Jenre save(Jenre jenre) {
         if (jenre.getId() <= 0) {
@@ -36,17 +27,20 @@ public class JenresDaoJpaImpl implements JenresDao{
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Jenre> findById(int id) {
         return Optional.ofNullable(em.find(Jenre.class, id));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Jenre> findAll() {
         TypedQuery<Jenre> query = em.createQuery("select j from Jenre j", Jenre.class);
         return query.getResultList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Jenre findByName(String jenre) {
         TypedQuery<Jenre> query = em.createQuery("select j from Jenre j where j.jenre = :jenre", Jenre.class);
@@ -54,18 +48,17 @@ public class JenresDaoJpaImpl implements JenresDao{
         return query.getSingleResult();
     }
 
+    @Transactional
     @Override
-    public int updateById(int id, Jenre jenre) {
-        Query query = em.createQuery("update Jenre j set j.jenre = :jenre where j.id = :id");
-        query.setParameter("id", id);
-        query.setParameter("jenre", jenre.getJenre());
-        return query.executeUpdate();
+    public Jenre update(Jenre jenre) {
+        return em.merge(jenre);
     }
 
+    @Transactional
     @Override
-    public int deleteById(int id) {
-        Query query = em.createQuery("delete from Jenre j where j.id = :id");
-        query.setParameter("id", id);
-        return query.executeUpdate();
+    public void deleteById(int id) {
+        Jenre jenre = findById(id).get();
+        em.remove(jenre);
+        em.flush();
     }
 }

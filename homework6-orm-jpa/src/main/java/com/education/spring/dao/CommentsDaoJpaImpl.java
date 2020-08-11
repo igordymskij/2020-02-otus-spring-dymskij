@@ -37,37 +37,20 @@ public class CommentsDaoJpaImpl implements CommentsDao{
     }
 
     @Override
-    public List<Comment> findByBookId(int bookid) {
-        TypedQuery<Comment> query = em.createQuery("select c from Comment c where c.id = :id", Comment.class);
-        query.setParameter("id", bookid);
-        return query.getResultList();
-    }
-
-    @Override
     public List<Comment> findAll() {
         TypedQuery<Comment> query = em.createQuery("select c from Comment c", Comment.class);
         return query.getResultList();
     }
 
     @Override
-    public int updateById(int id, Comment comment) {
-        Query query = em.createQuery("update Comment c set c.comment = :comment where c.id = :id");
-        query.setParameter("id", id);
-        query.setParameter("comment", comment.getComment());
-        return query.executeUpdate();
+    public Comment update(Comment comment) {
+        return em.merge(comment);
     }
 
     @Override
-    public int deleteById(int id) {
-        Query query = em.createQuery("delete from Comment c where c.id = :id");
-        query.setParameter("id", id);
-        return query.executeUpdate();
-    }
-
-    @Override
-    public int deleteByBookId(int bookid) {
-        Query query = em.createQuery("delete from Comment c where c.id = :id");
-        query.setParameter("id", bookid);
-        return query.executeUpdate();
+    public void deleteById(int id) {
+        Comment comment = findById(id).get();
+        em.remove(comment);
+        em.flush();
     }
 }

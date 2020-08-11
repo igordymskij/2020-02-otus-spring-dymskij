@@ -47,9 +47,4 @@ public class AppClientByComments extends AppClient {
         return comments.toString();
     }
 
-    @ShellMethod(value = "Delete all comments about book command", key = {"dcts", "deleteComments"})
-    public String deleteCommentsByBookName() {
-        Map<String, String> bookInfo = this.writeBookInfo(sr);
-        return jpaService.deleteCommentByBookName(bookInfo);
-    }
 }

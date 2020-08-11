@@ -11,7 +11,7 @@ public interface BooksDao {
     List<Book> findByName(String name);
     List<Book> findAll();
     Book save(Book book);
-    int updateById(int id, Book book);
-    int deleteById(int id);
+    Book update(Book book);
+    void deleteById(int id);
 
 }

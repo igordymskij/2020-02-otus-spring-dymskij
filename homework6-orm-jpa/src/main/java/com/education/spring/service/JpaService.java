@@ -48,8 +48,13 @@ public class JpaService {
         if (checkDublicateBook(book))
             return "Данная книга уже есть в базе!";
         Author authorDB = checkDublicateAuthor(book.getAuthor());
-        if (authorDB != null)
+        if (authorDB != null) {
+            book.setAuthor(null);
+            booksDao.save(book);
             book.setAuthor(authorDB);
+            booksDao.update(book);
+            return "Книга успешно сохранена!";
+        }
         booksDao.save(book);
         return "Книга успешно сохранена!";
     }
@@ -66,7 +71,7 @@ public class JpaService {
 
     public String updateBookName(Book book, String newName) {
         book.setName(newName);
-        if(booksDao.updateById(book.getId(), book) == 1)
+        if(booksDao.update(book) != null)
             return String.format("Новое название книги: %s", book.getName());
         return "Название книги не изменено!";
     }
@@ -77,7 +82,7 @@ public class JpaService {
             return DONT_HAVE_AUTHOR;
         }
         book.setAuthor(newAuthor);
-        if(booksDao.updateById(book.getId(), book) == 1)
+        if(booksDao.update(book) != null)
             return String.format("Новый автор книги: %s %s", book.getAuthor().getName(),
                                                              book.getAuthor().getLastName());
         return "Автор книги не изменён!";
@@ -89,14 +94,14 @@ public class JpaService {
             return DONT_HAVE_JENRE;
         }
         book.getJenre().setJenre(newJenreName);
-        if(booksDao.updateById(book.getId(), book) == 1)
+        if(booksDao.update(book) != null)
             return String.format("Новый жанр книги: %s", book.getJenre().getJenre());
         return "Жанр книги не изменён!";
     }
 
     public String updateBookYear(Book book, String newYear) {
         book.setYear(newYear);
-        if(booksDao.updateById(book.getId(), book) == 1)
+        if(booksDao.update(book) != null)
             return String.format("Изменённый год выпуска книги: %s", book.getYear());
         return "Год выпуска книги не изменен!";
     }
@@ -132,7 +137,8 @@ public class JpaService {
         Book book = this.findBook(bookInfo);;
         if (book == null)
             return DONT_HAVE_BOOK;
-        if (booksDao.deleteById(book.getId()) == 1)
+        booksDao.deleteById(book.getId());
+        if (this.findBook(bookInfo) == null)
             return "Книга успешно удалена!";
         return "Книга не удалена!";
     }
@@ -199,7 +205,7 @@ public class JpaService {
         if (author == null)
             return DONT_HAVE_AUTHOR;
         author.setLastName(newLastName);
-        if(authorsDao.updateById(author.getId(), author) == 1)
+        if(authorsDao.update(author) != null)
             return String.format("Новая фамилия автора книги: %s", author.getLastName());
         return "Фамилия автора книги не изменена!";
     }
@@ -209,7 +215,7 @@ public class JpaService {
         if (author == null)
             return DONT_HAVE_AUTHOR;
         author.setName(newName);
-        if(authorsDao.updateById(author.getId(), author) == 1)
+        if(authorsDao.update(author) != null)
             return String.format("Новое имя автора книги: %s", author.getName());
         return "Имя автора книги не изменено!";
     }
@@ -219,7 +225,7 @@ public class JpaService {
         if (author == null)
             return DONT_HAVE_AUTHOR;
         author.setSurname(newSurname);
-        if(authorsDao.updateById(author.getId(), author) == 1)
+        if(authorsDao.update(author) != null)
             return String.format("Новое отчество автора книги: %s", author.getSurname());
         return "Отчество автора книги не изменено!";
     }
@@ -228,7 +234,8 @@ public class JpaService {
         Author author = this.findAuthor(authorName);
         if (author == null)
             return DONT_HAVE_AUTHOR;
-        if (authorsDao.deleteById(author.getId()) == 1)
+        authorsDao.deleteById(author.getId());
+        if (this.findAuthor(authorName) == null)
             return "Автор успешно удалён!";
         return "Автор не удалён!";
     }
@@ -280,7 +287,7 @@ public class JpaService {
         if (jenre == null)
             return DONT_HAVE_JENRE;
         jenre.setJenre(newJenre);
-        if(jenresDao.updateById(jenre.getId(), jenre) == 1)
+        if(jenresDao.update(jenre) != null)
             return String.format("Новый жанр книг: %s", jenre.getJenre());
         return "Жанр книг не изменен!";
     }
@@ -289,7 +296,8 @@ public class JpaService {
         Jenre jenre = this.findJenreByName(name);
         if (jenre == null)
             return DONT_HAVE_JENRE;
-        if (jenresDao.deleteById(jenre.getId()) == 1)
+        jenresDao.deleteById(jenre.getId());
+        if (this.findJenreByName(name) == null)
             return "Жанр успешно удалён!";
         return "Жанр не удалён!";
     }
@@ -321,7 +329,7 @@ public class JpaService {
         if (comment == null)
             return "Комментария нет в базе";
         comment.setComment(updateComment);
-        if(commentDao.updateById(id, comment) == 1)
+        if(commentDao.update(comment) != null)
             return String.format("Новый комментарий для книги: %s", comment.getComment());
         return "Комментарий для книги не изменен!";
     }
@@ -330,18 +338,10 @@ public class JpaService {
         Comment comment = findCommentById(id);
         if (comment == null)
             return "Комментария нет в базе";
-        if (commentDao.deleteById(id) == 1)
+        commentDao.deleteById(id);
+        if (commentDao.findById(id) == null)
             return "Комментарий успешно удалён!";
         return "Комментарий не удалён!";
-    }
-
-    public String deleteCommentByBookName(Map<String, String> bookInfo) {
-        Book book = this.findBook(bookInfo);
-        if (book == null)
-            return "Данной книги нет в базе";
-        if (commentDao.deleteByBookId(book.getId()) == 1)
-            return "Комментарии по книге успешно удалёны!";
-        return "Комментарии по книге не удалёны!";
     }
 
     public List<Comment> getAllComments() {
