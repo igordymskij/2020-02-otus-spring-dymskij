@@ -2,30 +2,29 @@ package com.education.spring.controller;
 
 
 import com.education.spring.domain.Book;
-import com.education.spring.service.JpaService;
+import com.education.spring.service.BookService;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 @ShellComponent
 public class AppClientByBooks extends AppClient {
 
-    private final JpaService jpaService;
+    private final BookService bookService;
     private final Scanner sr;
 
-    public AppClientByBooks(JpaService jpaService, Scanner sr) {
-        this.jpaService = jpaService;
+    public AppClientByBooks(BookService bookService, Scanner sr) {
+        this.bookService = bookService;
         this.sr = sr;
     }
 
     @ShellMethod(value = "Write info about book command", key = {"wbk", "writebook"})
     public String writeInfoByBook() {
-        Map<String, String> bookInfo = writeBookInfo(sr);
-        String info = jpaService.insertBookInfo(bookInfo);
-        return String.format("%s Информация: %s", info, bookInfo);
+        Book book = writeBookInfo(sr);
+        String info = bookService.insertBookInfo(book);
+        return String.format("%s Информация: %s", info, book);
     }
 
     private String writePointMenuInfo() {
@@ -44,25 +43,25 @@ public class AppClientByBooks extends AppClient {
 
     @ShellMethod(value = "Update info by book command", key = {"ubk", "updateBook"})
     public String updateInfoByBook() {
-        Map<String, String> bookInfo = this.writeBookInfo(sr);
+        Book bookInfo = this.writeBookInfo(sr);
         Book book = checkWriteBookName(bookInfo);
         if(book == null)
             return "Данная книга отсуствует в базе!";
         switch (writePointMenuInfo()) {
             case "1": {
                 System.out.print(WRITE_BOOK_NAME);
-                return jpaService.updateBookName(book, sr.nextLine());
+                return bookService.updateBookName(book, sr.nextLine());
             }
             case "2":{
-                return jpaService.updateBookAuthorName(book, writeAuthorInfo(sr));
+                return bookService.updateBookAuthorName(book, writeAuthorInfo(sr));
             }
             case "3": {
                 System.out.print(WRITE_NEW_BOOK_JENRE);
-                return jpaService.updateBookJenreName(book, sr.nextLine());
+                return bookService.updateBookJenreName(book, sr.nextLine());
             }
             case "4": {
                 System.out.print(WRITE_NEW_BOOK_YEAR);
-                return jpaService.updateBookYear(book, sr.nextLine());
+                return bookService.updateBookYear(book, sr.nextLine());
             }
         }
         return "Некорректный ввод!";
@@ -71,7 +70,7 @@ public class AppClientByBooks extends AppClient {
     @ShellMethod(value = "Receive info about book command", key = {"gbk", "getBook"})
     public String receiveBookInfoByName() {
         String bookName = checkWriteClientData(WRITE_BOOK_NAME, sr);
-        List<Book> book = jpaService.findBookByName(bookName);
+        List<Book> book = bookService.findBookByName(bookName);
         if (book == null)
             return "Данной книги нет в базе!";
         return book.toString();
@@ -79,7 +78,7 @@ public class AppClientByBooks extends AppClient {
 
     @ShellMethod(value = "Receive info about all book command", key = {"gbks", "getBooks"})
     public String receiveAllBookInfoByName() {
-        List<Book> bookList = jpaService.getAllBooks();
+        List<Book> bookList = bookService.getAllBooks();
         if (bookList.isEmpty())
             return "Список книг пуст!";
         return bookList.toString();
@@ -87,12 +86,12 @@ public class AppClientByBooks extends AppClient {
 
     @ShellMethod(value = "Delete info about book command", key = {"dbk", "deleteBook"})
     public String deleteBookInfoByName() {
-        Map<String, String> bookInfo = this.writeBookInfo(sr);
-        return jpaService.deleteBookByName(bookInfo);
+        Book book = this.writeBookInfo(sr);
+        return bookService.deleteBookByName(book);
     }
 
-    private Book checkWriteBookName(Map<String, String> bookInfo) {
-        return jpaService.findBook(bookInfo);
+    private Book checkWriteBookName(Book book) {
+        return bookService.findBook(book);
     }
 
 

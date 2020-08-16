@@ -27,20 +27,20 @@ public class JenresDaoJpaImpl implements JenresDao{
         }
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public Optional<Jenre> findById(int id) {
         return Optional.ofNullable(em.find(Jenre.class, id));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public List<Jenre> findAll() {
         TypedQuery<Jenre> query = em.createQuery("select j from Jenre j", Jenre.class);
         return query.getResultList();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public Jenre findByName(String jenre) {
         TypedQuery<Jenre> query = em.createQuery("select j from Jenre j where j.jenre = :jenre", Jenre.class);

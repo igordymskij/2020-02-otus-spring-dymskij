@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface CommentsDao {
 
     Optional<Comment> findById(int id);
+    List<Comment> findByBookId(int bookId);
     List<Comment> findAll();
     Comment save(Comment comment);
     Comment update(Comment comment);

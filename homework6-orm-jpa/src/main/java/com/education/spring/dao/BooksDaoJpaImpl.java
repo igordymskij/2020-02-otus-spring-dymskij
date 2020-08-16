@@ -27,20 +27,20 @@ public class BooksDaoJpaImpl implements BooksDao {
         }
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public Optional<Book> findById(int id) {
         return Optional.ofNullable(em.find(Book.class, id));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public List<Book> findAll() {
         TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
         return query.getResultList();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public List<Book> findByName(String name) {
         TypedQuery<Book> query = em.createQuery("select b from Book b where b.name = :name", Book.class);

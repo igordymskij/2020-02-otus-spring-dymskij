@@ -1,32 +1,29 @@
 package com.education.spring.controller;
 
 import com.education.spring.domain.Author;
-import com.education.spring.service.JpaService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.education.spring.service.AuthorService;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 @ShellComponent
 public class AppClientByAuthors extends AppClient {
 
-    private final JpaService jpaService;
+    private final AuthorService authorService;
     private final Scanner sr;
 
-    @Autowired
-    public AppClientByAuthors(JpaService jpaService, Scanner sr) {
-        this.jpaService = jpaService;
+    public AppClientByAuthors(AuthorService authorService, Scanner sr) {
+        this.authorService = authorService;
         this.sr = sr;
     }
 
     @ShellMethod(value = "Write info about author command", key = {"war", "writeAuthor"})
     public String writeInfoByAuthor() {
-        Map<String, String> authorInfo = writeAuthorInfo(sr);
-        String info = jpaService.insertAuthorInfo(authorInfo);
-        return String.format("%s Информация: %s", info, authorInfo);
+        Author author = writeAuthorInfo(sr);
+        String info = authorService.insertAuthorInfo(author);
+        return String.format("%s Информация: %s", info, author);
     }
 
     private String writePointAuthorMenuInfo() {
@@ -44,21 +41,21 @@ public class AppClientByAuthors extends AppClient {
 
     @ShellMethod(value = "Update info by author command", key = {"uar", "updateAuthor"})
     public String updateInfoByAuthor() {
-        Map<String, String> authorInfo = writeAuthorInfo(sr);
-        if(!checkWriteAuthorName(authorInfo))
+        Author author = writeAuthorInfo(sr);
+        if(!checkWriteAuthorName(author))
             return "Данный автор отсуствует в базе!";
         switch (writePointAuthorMenuInfo()) {
             case "1": {
                 System.out.print(WRITE_NEW_AUTHOR_LASTNAME);
-                return jpaService.updateAuthorLastName(authorInfo, sr.nextLine());
+                return authorService.updateAuthorLastName(author, sr.nextLine());
             }
             case "2":{
                 System.out.print(WRITE_NEW_AUTHOR_NAME);
-                return jpaService.updateAuthorName(authorInfo, sr.nextLine());
+                return authorService.updateAuthorName(author, sr.nextLine());
             }
             case "3": {
                 System.out.print(WRITE_AUTHOR_SURNAME);
-                return jpaService.updateAuthorSurname(authorInfo, sr.nextLine());
+                return authorService.updateAuthorSurname(author, sr.nextLine());
             }
 
         }
@@ -69,7 +66,7 @@ public class AppClientByAuthors extends AppClient {
     public String receiveAuthorInfoByName() {
         System.out.print(WRITE_AUTHOR_LASTNAME);
         String lastName = sr.nextLine();
-        List<Author> author = jpaService.findAuthorByName(lastName);
+        List<Author> author = authorService.findAuthorByName(lastName);
         if (author == null)
             return "Данного автора нет в базе!";
         return author.toString();
@@ -77,17 +74,17 @@ public class AppClientByAuthors extends AppClient {
 
     @ShellMethod(value = "Receive info about all author command", key = {"gars", "getAuthors"})
     public List<Author> receiveAllAuthorsInfoByName() {
-        return jpaService.getAllAuthors();
+        return authorService.getAllAuthors();
     }
 
     @ShellMethod(value = "Delete info about author command", key = {"dar", "deleteAuthor"})
     public String deleteAuthorInfoByName() {
-        Map<String, String> authorInfo = writeAuthorInfo(sr);
-        return jpaService.deleteAuthorByName(authorInfo);
+        Author author = writeAuthorInfo(sr);
+        return authorService.deleteAuthorByName(author);
     }
 
-    private boolean checkWriteAuthorName(Map<String, String> authorName) {
-        if(jpaService.findAuthor(authorName) == null) {
+    private boolean checkWriteAuthorName(Author author) {
+        if(authorService.findAuthor(author) == null) {
             return false;
         }
         return true;

@@ -1,15 +1,11 @@
 package com.education.spring.dao;
 
-import com.education.spring.domain.Author;
-import com.education.spring.domain.Book;
 import com.education.spring.domain.Comment;
-import com.education.spring.domain.Jenre;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
@@ -32,13 +28,21 @@ public class CommentsDaoJpaImpl implements CommentsDao{
         }
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
-    public Optional<Comment> findById(int id) {
-        return Optional.ofNullable(em.find(Comment.class, id));
+    public Optional<Comment> findById(int commentid) {
+        return Optional.ofNullable(em.find(Comment.class, commentid));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
+    @Override
+    public List<Comment> findByBookId(int bookId) {
+        TypedQuery<Comment> query = em.createQuery("select c from Comment c where c.id = :bookid", Comment.class);
+        query.setParameter("bookid", bookId);
+        return query.getResultList();
+    }
+
+    @Transactional
     @Override
     public List<Comment> findAll() {
         TypedQuery<Comment> query = em.createQuery("select c from Comment c", Comment.class);

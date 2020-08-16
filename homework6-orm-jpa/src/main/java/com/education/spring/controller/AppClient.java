@@ -1,12 +1,12 @@
 package com.education.spring.controller;
 
-import org.springframework.stereotype.Component;
+import com.education.spring.domain.Author;
+import com.education.spring.domain.Book;
+import com.education.spring.domain.Jenre;
 
-import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 public class AppClient {
 
@@ -27,7 +27,7 @@ public class AppClient {
     final String WRITE_NEW_BOOK_JENRE = "Введите новый жанр книги: ";
     final String WRITE_NEW_BOOK_YEAR = "Введите новый год выпуска книги: ";
 
-    public Map<String, String> writeBookInfo(Scanner sr) {
+    public Book writeBookInfo(Scanner sr) {
         String bookName = checkWriteClientData(WRITE_BOOK_NAME, sr);
         String authorLastName = checkWriteClientData(WRITE_AUTHOR_LASTNAME, sr);
         String authorName = checkWriteClientData(WRITE_AUTHOR_NAME, sr);
@@ -35,24 +35,23 @@ public class AppClient {
         String authorSurname = sr.nextLine();
         String bookJenre = checkWriteClientData(WRITE_BOOK_JENRE, sr);
         String bookYear = checkWriteClientData(WRITE_BOOK_YEAR, sr);
-        Map<String, String> bookInfo = Map.of("bookName", bookName,
-                "authorLastName", authorLastName,
-                "authorName", authorName,
-                "authorSurname", authorSurname,
-                "bookJenre", bookJenre,
-                "bookYear", bookYear);
-        return bookInfo;
+        return new Book(0, bookName,
+                new Author(0, authorName,
+                        authorLastName,
+                        authorSurname),
+                new Jenre(0, bookJenre),
+                bookYear);
     }
 
-    public Map<String, String> writeAuthorInfo(Scanner sr) {
+    public Author writeAuthorInfo(Scanner sr) {
         String authorLastName = checkWriteClientData(WRITE_AUTHOR_LASTNAME, sr);
         String authorName = checkWriteClientData(WRITE_AUTHOR_NAME, sr);
         System.out.print(WRITE_AUTHOR_SURNAME);
         String authorSurName = sr.nextLine();
-        Map<String, String> authorInfo = Map.of("authorLastName", authorLastName,
-                "authorName", authorName,
-                "authorSurname", authorSurName);
-        return authorInfo;
+        return new Author(0,
+                authorName,
+                authorLastName,
+                authorSurName);
     }
 
     public boolean checkUserAnswer(String answer) {

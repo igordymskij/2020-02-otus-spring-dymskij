@@ -27,20 +27,20 @@ public class AuthorsDaoJpaImpl implements AuthorsDao {
         }
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public Optional<Author> findById(int id) {
         return Optional.ofNullable(em.find(Author.class, id));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public List<Author> findAll() {
         TypedQuery<Author> query = em.createQuery("select a from Author a", Author.class);
         return query.getResultList();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public List<Author> findByName(String lastName) {
         TypedQuery<Author> query = em.createQuery("select a from Author a where a.lastName = :lastName", Author.class);

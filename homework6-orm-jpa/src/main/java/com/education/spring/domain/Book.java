@@ -33,24 +33,4 @@ public class Book {
     @Column(name = "year")
     private String year;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book that = (Book) o;
-        if (!name.equals(that.name)) return false;
-        if (!author.equals(that.author)) return false;
-        if (!jenre.equals(that.jenre)) return false;
-        return year.equals(that.year);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + author.hashCode();
-        result = 31 * result + year.hashCode();
-        result = 31 * result + jenre.hashCode();
-        return result;
-    }
-
 }
