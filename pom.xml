@@ -20,6 +20,7 @@
     <module>homework-list-questions</module>
     <module>homework5-spring-jdbc</module>
     <module>homework4-spring-shell</module>
+    <module>homework7-spring-jpa</module>
   </modules>
 
 </project>
