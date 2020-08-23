@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface JenreService {
 
-    String insertJenreInfo(Map<String, String> jenreInfo);
+    String insertJenreInfo(Jenre jenre);
     boolean checkDublicateJenre(Jenre jenre);
     Jenre getJenreByName(String jenre);
     String updateJenre(String name, String newJenre);

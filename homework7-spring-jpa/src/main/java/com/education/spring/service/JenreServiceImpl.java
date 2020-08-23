@@ -25,8 +25,7 @@ public class JenreServiceImpl implements JenreService, AppService {
         }
     }
 
-    public String insertJenreInfo(Map<String, String> jenreInfo) {
-        Jenre jenre = new Jenre(0, jenreInfo.get("jenre"));
+    public String insertJenreInfo(Jenre jenre) {
         if (checkDublicateJenre(jenre))
             return "Жанр уже есть в базе!";
         jenreRepository.save(jenre);

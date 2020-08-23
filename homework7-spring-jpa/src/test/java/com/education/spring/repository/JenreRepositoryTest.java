@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DataJpaTest
-@Import(JenreRepository.class)
 class JenreRepositoryTest {
 
     @Autowired
