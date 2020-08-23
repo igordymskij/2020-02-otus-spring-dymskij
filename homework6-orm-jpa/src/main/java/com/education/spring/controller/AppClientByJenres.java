@@ -26,9 +26,9 @@ public class AppClientByJenres extends AppClient {
     @ShellMethod(value = "Write info about jenre command", key = {"wje", "writeJenre"})
     public String writeInfoByJenre() {
         String newJenre = checkWriteClientData(WRITE_BOOK_JENRE, sr);
-        Map<String, String> newJenreInfo = Map.of("jenre", newJenre);
-        String info = jenreService.insertJenreInfo(newJenreInfo);
-        return String.format("%s Информация: %s", info, newJenreInfo);
+        Jenre jenre = new Jenre(0, newJenre);
+        String info = jenreService.insertJenreInfo(jenre);
+        return String.format("%s Информация: %s", info, jenre);
     }
 
     @ShellMethod(value = "Update info by author command", key = {"uje", "updateJenre"})
