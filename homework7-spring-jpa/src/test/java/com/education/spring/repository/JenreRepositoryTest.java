@@ -55,16 +55,16 @@ class JenreRepositoryTest {
     }
 
 
-//    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
-//    @Test
-//    void updateByIdTest() {
-//        Jenre expectedJenre = new Jenre(0, "Сказки");
-//        em.persist(expectedJenre);
-//        expectedJenre.setJenre("Фантастика");
-//        jenreRepository.update(expectedJenre);
-//        Jenre actualJenre = jenreRepository.findById(1).get();
-//        assertThat(actualJenre).isEqualTo(expectedJenre);
-//    }
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
+    @Test
+    void updateByIdTest() {
+        Jenre expectedJenre = new Jenre(0, "Сказки");
+        em.persist(expectedJenre);
+        expectedJenre.setJenre("Фантастика");
+        jenreRepository.update(expectedJenre);
+        Jenre actualJenre = jenreRepository.findById(1).get();
+        assertThat(actualJenre).isEqualTo(expectedJenre);
+    }
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test

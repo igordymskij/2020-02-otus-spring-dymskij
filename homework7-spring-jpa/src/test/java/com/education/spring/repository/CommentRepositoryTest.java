@@ -59,22 +59,22 @@ class CommentRepositoryTest {
         assertThat(actualCommentsList).isEqualTo(expectedCommentsList);
     }
 
-//    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
-//    @Test
-//    void updateTest() {
-//        Book book = new Book(0, "Маленький принц",
-//                new Author(0, "Антуан", "Сент-Экзюпери", null),
-//                new Jenre(0, "Приключения"),
-//                "1942");
-//        em.persist(book);
-//        Comment actualComment = new Comment(0, book, "Великая книга");
-//        em.persist(actualComment);
-//        actualComment.setComment("Великая книга о жизни!");
-//        commentRepository.update(actualComment);
-//        em.refresh(actualComment);
-//        Comment expectedAuthor = commentRepository.findById(1).get();
-//        assertThat(actualComment).isEqualTo(expectedAuthor);
-//    }
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
+    @Test
+    void updateTest() {
+        Book book = new Book(0, "Маленький принц",
+                new Author(0, "Антуан", "Сент-Экзюпери", null),
+                new Jenre(0, "Приключения"),
+                "1942");
+        em.persist(book);
+        Comment actualComment = new Comment(0, book, "Великая книга");
+        em.persist(actualComment);
+        actualComment.setComment("Великая книга о жизни!");
+        commentRepository.update(actualComment);
+        em.refresh(actualComment);
+        Comment expectedAuthor = commentRepository.findById(1).get();
+        assertThat(actualComment).isEqualTo(expectedAuthor);
+    }
 
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)

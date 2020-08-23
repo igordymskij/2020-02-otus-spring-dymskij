@@ -58,18 +58,18 @@ public class AuthorRepositoryTest {
         assertThat(actualAuthorsList).isEqualTo(expectedAuthorsList);
     }
 
-//    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
-//    @Test
-//    void nameUpdateTest() {
-//        Author actualAuthor = new Author(0, "Рене", "Керролл", "");
-//        em.persist(actualAuthor);
-//        actualAuthor.setName("Льюис");
-//        authorRepository.update(actualAuthor);
-//        em.refresh(actualAuthor);
-//        Optional<Author> optionalAuthor = authorRepository.findById(1);
-//        Author expectedAuthor = optionalAuthor.get();
-//        assertThat(actualAuthor).isEqualTo(expectedAuthor);
-//    }
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
+    @Test
+    void nameUpdateTest() {
+        Author actualAuthor = new Author(0, "Рене", "Керролл", "");
+        em.persist(actualAuthor);
+        actualAuthor.setName("Льюис");
+        authorRepository.update(actualAuthor);
+        em.refresh(actualAuthor);
+        Optional<Author> optionalAuthor = authorRepository.findById(1);
+        Author expectedAuthor = optionalAuthor.get();
+        assertThat(actualAuthor).isEqualTo(expectedAuthor);
+    }
 
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)

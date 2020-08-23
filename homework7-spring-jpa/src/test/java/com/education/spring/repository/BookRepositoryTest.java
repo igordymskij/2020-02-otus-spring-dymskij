@@ -70,21 +70,21 @@ public class BookRepositoryTest {
         assertThat(actualBooksList).isEqualTo(expectedBooksList);
     }
 
-//    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
-//    @Test
-//    public void updateByIdTest() {
-//        Book actualBook = new Book(0, "Маленький принц",
-//                new Author(0, "Рене", "Сент-Экзюпери", ""),
-//                new Jenre(0, "Фантастика"),
-//                "1942");
-//        em.persist(actualBook);
-//        actualBook.getAuthor().setName("Керролл");
-//        bookRepository.update(actualBook);
-//        em.refresh(actualBook);
-//        Optional<Book> optionalBook = bookRepository.findById(1);
-//        Book expectedBook = optionalBook.get();
-//        assertThat(actualBook).isEqualTo(expectedBook);
-//    }
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
+    @Test
+    public void updateByIdTest() {
+        Book actualBook = new Book(0, "Маленький принц",
+                new Author(0, "Рене", "Сент-Экзюпери", ""),
+                new Jenre(0, "Фантастика"),
+                "1942");
+        em.persist(actualBook);
+        actualBook.getAuthor().setName("Керролл");
+        bookRepository.update(actualBook);
+        em.refresh(actualBook);
+        Optional<Book> optionalBook = bookRepository.findById(1);
+        Book expectedBook = optionalBook.get();
+        assertThat(actualBook).isEqualTo(expectedBook);
+    }
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
