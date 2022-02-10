@@ -11,7 +11,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <hibernate-version>5.4.18.Final</hibernate-version>
+        <hibernate-version>5.4.24.Final</hibernate-version>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
